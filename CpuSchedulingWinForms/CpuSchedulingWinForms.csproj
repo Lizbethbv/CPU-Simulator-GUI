@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6954F540-2148-4D2F-879A-BE82576B1083}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>CpuSchedulingWinForms</RootNamespace>
     <AssemblyName>CpuSchedulingWinForms</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>

@@ -88,7 +88,7 @@ namespace CpuSchedulingWinForms
                 {
                     string input =
                         Microsoft.VisualBasic.Interaction.InputBox("Enter burst time: ",
-                                                           "Burst time for P" + (num + 1),
+                                                     "Burst time for P" + (num + 1),
                                                            "",
                                                            -1, -1);
 
@@ -340,6 +340,304 @@ namespace CpuSchedulingWinForms
                 MessageBox.Show("Average turnaround time for " + np + " processes: " + averageTurnaroundTime + " sec(s)", "", MessageBoxButtons.OK);
             }
         }
+
+
+    public static void srtfAlgorithm(string userInput)
+    {
+        int np = Convert.ToInt16(userInput);
+        int npX2 = np * 2;
+        int input;
+        double[] bp = new double[np];
+        double[] wtp = new double[np];
+        string[] output1 = new string[npX2];
+        double twt = 0.0, awt;
+
+
+        int i, completedCounter = 0, processesLeft = np;
+        double total = 0.0;
+
+        double waitTime = 0;
+           double[] turnaroundTime=new double[np+1]; ;
+        double averageWaitTime, averageTurnaroundTime;
+
+       double[] arrivalTime = new double[np+1];
+
+        double[] burstTime = new double[np+1];
+         int num=arrivalTime.Length;
+
+        double[] remainingTime = new double[np+1];
+        int currentTime = 0;
+        int remainingTime2 = 0;
+        double[] completionTime = new double[np+1];
+        double[] tat = new double[np+1];
+        double[] wt = new double[np+1];
+        double[] completedCounters = new double[np+1];
+        double[] ready = new double[np+1];
+        int endTime = npX2;
+
+        int completedP =0;
+        int shortestRemainingTimeIndex = 0;
+
+        int smallest;
+        double[] temp = new double[10];
+        int x = np;
+        Console.WriteLine("\nShortest Remaining Time First:");
+       for (num = 0; num <= np - 1; num++)
+        {
+            Console.WriteLine("\nEnter Arrival time for P" + (num + 1) + ":");
+
+
+            // Microsoft.VisualBasic.Interaction.InputBox("Enter Burst time: ","Burst time for P" + (num + 1),-1, -1);
+            var arrivalInput = Console.ReadLine();
+
+
+
+            arrivalTime[num] = Convert.ToInt32(arrivalInput);
+
+            Console.WriteLine("\nEnter Burst time for P" + (num + 1) + ":");
+
+
+            // Microsoft.VisualBasic.Interaction.InputBox("Enter Burst time: ","Burst time for P" + (num + 1),-1, -1);
+            var burstInput = Console.ReadLine();
+
+
+
+            burstTime[num] = Convert.ToInt32(burstInput);
+
+        }
+
+
+        for(i = 0; i < num; i++)
+        {
+            remainingTime[i]=burstTime[i];
+        }
+
+        while (completedP < num)
+        {
+
+
+            shortestRemainingTimeIndex = -1;
+            int minRemainingTime = int.MaxValue;
+            for (int a = 0; a< num; a++)
+            {
+                if (remainingTime[a] > 0 && arrivalTime[a] <= currentTime && remainingTime[a] < minRemainingTime)
+                {
+
+                    minRemainingTime = (int)remainingTime[a];
+                    shortestRemainingTimeIndex = a;
+                }
+            }
+
+            if (shortestRemainingTimeIndex == -1)
+            {
+                currentTime++;
+                continue;
+            }
+
+            remainingTime[shortestRemainingTimeIndex]--;
+            currentTime++;
+
+            if (remainingTime[shortestRemainingTimeIndex] == 0)
+            {
+
+                completedP++;
+                completionTime[shortestRemainingTimeIndex] = currentTime;
+                turnaroundTime[shortestRemainingTimeIndex] = currentTime - arrivalTime[shortestRemainingTimeIndex];
+                wt[shortestRemainingTimeIndex] = turnaroundTime[shortestRemainingTimeIndex] -burstTime[shortestRemainingTimeIndex];
+            }
+        }
+
+        // Calculate and display results
+        Console.WriteLine("Process\tArrival\tBurst\tComplete\tWait\tTurnaround");
+        for (int d = 0; d < num; d++)
+        {
+            Console.WriteLine(
+                $"{d + 1}\t{arrivalTime[d]}\t{burstTime[d]}\t{completionTime[d]}\t\t{wt[d]}\t{turnaroundTime[d]}");
+        }
+
+        // Calculate and display average waiting and turnaround times
+        double twt1 = 0;
+        double totalTurnaround = 0;
+        for (int d = 0; d < num; d++)
+        {
+
+            twt1 += wt[d];
+            totalTurnaround += turnaroundTime[d];
+        }
+
+        Console.WriteLine($"Average Waiting Time: {twt1 / num}");
+        Console.WriteLine($"Average Turnaround Time: {totalTurnaround / num}");
+
+
+
+
+        //num=current Process, np = total number of processes
+        //if at[num] = 0, execute, until next at[num] , if bt[num] < bt[num] execute
+        //until next at[num] , if bt[num] < bt[num] execute
+        //if all executed, start over with bt[num]<bt[num]
+
+
+            }
+
+
+
+        public static void lrtfAlgorithm(string userInput)
+        {
+            int np1 = Convert.ToInt16(userInput);
+            int npX2 = np1 * 2;
+            int input;
+            double[] bp = new double[np1];
+            double[] wtp = new double[np1];
+            string[] output1 = new string[npX2];
+            double twt = 0.0, awt;
+
+
+            int i, completedCounter = 0, processesLeft = np1;
+            double total = 0.0;
+
+            double waitTime = 0;
+            double[] turnaroundTime=new double[np1+1]; ;
+            double averageWaitTime, averageTurnaroundTime;
+
+            double[] arrivalTime1 = new double[np1+1];
+
+            double[] burstTime1 = new double[np1+1];
+            int num=arrivalTime1.Length;
+
+            double[] remainingTime = new double[np1+1];
+            int currentTime = 0;
+            int remainingTime2 = 0;
+            double[] completionTime = new double[np1+1];
+            double[] tat = new double[np1+1];
+            double[] wt = new double[np1+1];
+            double[] completedCounters = new double[np1+1];
+            double[] ready = new double[np1+1];
+            int endTime = npX2;
+
+            int completedP =0;
+            int longestRemainingTimeIndex = 0;
+
+
+
+            Console.WriteLine("\nLongest Remaining Time First:");
+                for (num = 0; num <= np1 - 1; num++)
+                {Console.WriteLine("\nEnter Arrival time for P" + (num+1) + ":");
+
+
+                    // Microsoft.VisualBasic.Interaction.InputBox("Enter Burst time: ","Burst time for P" + (num + 1),-1, -1);
+                    var arrivalInput = Console.ReadLine();
+
+
+
+                    arrivalTime1[num] = Convert.ToInt32(arrivalInput);
+
+                    Console.WriteLine("\nEnter Burst time for P" + (num+1) + ":");
+
+
+                    // Microsoft.VisualBasic.Interaction.InputBox("Enter Burst time: ","Burst time for P" + (num + 1),-1, -1);
+                    var burstInput = Console.ReadLine();
+
+
+
+                    burstTime1[num] = Convert.ToInt32(burstInput);
+                    /*//MessageBox.Show("Enter Burst time for P" + (num + 1) + ":", "Burst time for Process", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    //Console.WriteLine("\nEnter Burst time for P" + (num + 1) + ":");
+
+                    string input =
+                        Microsoft.VisualBasic.Interaction.InputBox("Enter Burst time: ",
+                            "Burst time for P" + (num + 1),
+                            "",
+                            -1, -1);
+
+                    bp1[num] = Convert.ToInt64(input);
+
+                    //var input = Console.ReadLine();
+                    //bp[num] = Convert.ToInt32(input);*/
+                }
+
+
+            /*
+                if(array[i] < min)
+                {
+                    min = array[i];
+                }*/
+
+        for(i = 0; i < num; i++)
+        {
+            remainingTime[i]=burstTime1[i];
+        }
+        while (completedP < num)
+        {
+            int y = (int)arrivalTime1.Sum();
+            longestRemainingTimeIndex = y;
+            int maxRemainingTime = int.MinValue;
+            for (int a = 0; a< num; a++)
+            {
+                if (remainingTime[a] > 0 && arrivalTime1[a] <= currentTime && remainingTime[a] < maxRemainingTime)
+                {
+
+                    maxRemainingTime = (int)remainingTime[a];
+                    longestRemainingTimeIndex = a;
+                }
+            }
+
+            if (longestRemainingTimeIndex == y)
+            {
+                currentTime++;
+                continue;
+            }
+
+            remainingTime[longestRemainingTimeIndex]++;
+            currentTime++;
+
+
+            if (remainingTime[longestRemainingTimeIndex] == 0)
+            {
+
+                completedP++;
+                completionTime[longestRemainingTimeIndex] = currentTime;
+                turnaroundTime[longestRemainingTimeIndex] = currentTime - arrivalTime1[longestRemainingTimeIndex];
+                wt[longestRemainingTimeIndex] = turnaroundTime[longestRemainingTimeIndex] -burstTime1[longestRemainingTimeIndex];
+            }
+        }
+        Console.WriteLine("Process\tArrival\tBurst\tComplete\tWait\tTurnaround");
+        for (int d = 0; d < num; d++)
+        {
+            Console.WriteLine(
+                $"{d + 1}\t{arrivalTime1[d]}\t{burstTime1[d]}\t{completionTime[d]}\t\t{wt[d]}\t{turnaroundTime[d]}");
+        }
+
+        double twt1 = 0;
+        double totalTurnaround = 0;
+        for (int d = 0; d < num; d++)
+        {
+
+            twt1 += wt[d];
+            totalTurnaround += turnaroundTime[d];
+        }
+
+        Console.WriteLine($"Average Waiting Time: {twt1 / num}");
+        Console.WriteLine($"Average Turnaround Time: {totalTurnaround / num}");
+
+
+
+        }
+
+
+
+
+
+
     }
 }
+
+
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+
+        }
+    }
+
 

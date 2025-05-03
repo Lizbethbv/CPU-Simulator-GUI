@@ -8,6 +8,6 @@ namespace CpuSchedulingWinForms
 {
     public static class Helper
     {
-        public static string QuantumTime { get; set; }
+        public static String QuantumTime { get; set; }
     }
 }
